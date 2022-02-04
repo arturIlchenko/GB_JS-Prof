@@ -21,3 +21,8 @@ let buyed = {id: 5, title: "new", price: 999};
 send((error) => { console.log(err) }, (res) => {
   cart.push(buyed)
 }, `${API_URL}/cart`, 'POST', JSON.stringify(buyed), {"Content-Type": "application/json"})
+// Пользователь удаляет товар из корзины (не уверен что правильно работает)
+// let deleted = {id: 5, title: "new", price: 999};
+// send((error) => { console.log(err) }, (res) => {
+//   cart.filter(deleted)
+// }, `${API_URL}/cart`, 'DELETE', JSON.stringify(deleted), {"Content-Type": "application/json"})

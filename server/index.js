@@ -65,6 +65,20 @@ app.post('/api/v1/cart', (req, res) => {
   })
 })
 
+app.delete('/api/v1/cart', (req, res) => {
+	fs.readFile(cart_path, 'utf-8', (err, data) => {
+		if(!err) {
+			const cart = JSON.parse(data);
+			const newCart = cart.filter((value) => value.id != req.body);
+			fs.writeFile(cart_path, JSON.stringify(newCart), 'utf-8', (err, data) => {
+				res.sendStatus(201)
+			})
+		}else {
+			res.status(500).send(err)
+		}
+	})
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
