@@ -1,8 +1,9 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-	mode: 'development',
+	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 	entry: {
 		main: path.resolve(__dirname, './src/index.js'),
 	},
@@ -18,17 +19,29 @@ module.exports = {
 			template: path.resolve(__dirname, './public/template.html'), // шаблон
 			filename: 'index.html', // название выходного файла
 		}),
+		new MiniCssExtractPlugin({
+			filename: "[name].css",
+			chunkFilename: "[id].css",
+		 }),
 	],
 	module: {
 		rules: [
 			{
-				test: /\.s[ca]ss$/i,
+				test: /\.css$/i,
 				use: [
-					"style-loader",
+					MiniCssExtractPlugin.loader,
 					"css-loader",
 					"sass-loader",
 				]
-			}
+			},
+			// {
+			// 	test: /\.s[ac]ss$/i,
+			// 	use: [
+			// 		MiniCssExtractPlugin.loader,
+			// 		"css-loader",
+			// 		"sass-loader",
+			// 	]
+			// }
 		]
 	}
 }
